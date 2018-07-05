@@ -17,8 +17,14 @@ class SessionsController < Devise::SessionsController
   def refresh_token
     refresh_token = request.headers['X-REFRESH-TOKEN']
 
-    payload = decode_token(refresh_token)
-    token = User.find_by(email: payload[:email]).generate_token
-    render json: { msg: token }, status: :ok
+    payload, status = decode_token(refresh_token)
+    
+    if payload.nil?
+      render json: { error: I18n.t("jwt.#{status}") }, status: status
+      return 
+    end
+
+    token = User.find_by(email: payload["email"]).generate_token
+    render json: { token: token }, status: :ok
   end
 end

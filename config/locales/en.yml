@@ -34,5 +34,7 @@ en:
   unauthorized: 'Access declined!!!'
   invalid: "Invalid email/password"
   jwt:
-    invalid: "Invalid token"
-    expired: "Token expired"
+    bad_request: "Invalid token"
+    unauthorized: "Token expired"
+  post:
+    invalid_url: "Given URL is invalid" 
