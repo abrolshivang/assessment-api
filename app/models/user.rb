@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   def generate_token(exp = true)
     payload = { email: email }
-    (payload[:exp] = Time.now.to_i + 3600) if exp
+    (payload[:exp] = Time.current.to_i + 3600) if exp
     JWT.encode(payload, 
 	       Rails.application.credentials[Rails.env.to_sym][:secret_key_base].to_s, 
 	       ALGORITHM)

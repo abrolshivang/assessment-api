@@ -16,7 +16,8 @@ class ApplicationController < ActionController::API
     begin
       payload = JWT.decode(token, 
 		 Rails.application.credentials[Rails.env.to_sym][:secret_key_base].to_s, 
-		 User::ALGORITHM).first
+		 true,
+		 { algorithm: User::ALGORITHM }).first
       return [payload, :success]
     rescue JWT::ExpiredSignature
       return [nil, :unauthorized]
