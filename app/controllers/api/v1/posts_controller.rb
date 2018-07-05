@@ -1,6 +1,6 @@
 class Api::V1::PostsController < ApplicationController
-  before_action :authenticate!, except: [:index, :show]
-  before_action :authorize_post, only: [:update, :delete]
+  before_action :authenticate!, except: %i[index show]
+  before_action :authorize_post, only: %i[update destroy]
 
   # GET /api/v1/posts.json
   def index
@@ -42,9 +42,7 @@ class Api::V1::PostsController < ApplicationController
   def authorize_post
     @post = current_user.posts.where(id: params[:id])
    
-    unless @post 
-      render(json: { msg: I18n.t('unauthorized') }, status: :unauthorized) && return
-    end
+    render(json: { msg: I18n.t('unauthorized') }, status: :unauthorized) && return unless @post
   end
 
   def post_params

@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable
 
-  ALGORITHM = 'HS512'
+  ALGORITHM = 'HS512'.freeze
 
   def generate_token(exp = true)
     payload = { email: email }
