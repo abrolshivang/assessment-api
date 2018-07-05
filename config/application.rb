@@ -34,5 +34,13 @@ module AssessmentApi
     config.generators do |g|
       g.test_framework  :rspec, fixture: false
     end
+
+    # TODO: Since FE URL is unknown so I am using origins as '*'
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+	origins '*'
+	resource '*', :headers => :any, :methods => [:get, :post, :options, :put, :delete]
+      end
+    end
   end
 end

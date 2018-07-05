@@ -31,3 +31,8 @@
 
 en:
   hello: "Hello world"
+  unauthorized: 'Access declined!!!'
+  invalid: "Invalid email/password"
+  jwt:
+    invalid: "Invalid token"
+    expired: "Token expired"
