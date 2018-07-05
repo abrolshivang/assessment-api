@@ -7,7 +7,7 @@ RSpec.describe SessionsController, type: :controller do
 
   let!(:user) { create(:user) }
 
-  context "#sign_in" do
+  context "POST #sign_in" do
     example "user should be sign in if email/password if correct" do
       post :create, params: { email: user.email, password: '123456' }, format: :json
 
@@ -25,7 +25,7 @@ RSpec.describe SessionsController, type: :controller do
     end
   end
 
-  context "#refresh_token" do
+  context "GET #refresh_token" do
     before do 
       post :create, params: { email: user.email, password: '123456' }, format: :json
       resp = JSON.parse(response.body)

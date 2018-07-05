@@ -40,12 +40,12 @@ class Api::V1::PostsController < ApplicationController
   private
 
   def authorize_post
-    @post = current_user.posts.where(id: params[:id])
+    @post = current_user.posts.where(id: params[:id]).first
    
     render(json: { msg: I18n.t('unauthorized') }, status: :unauthorized) && return unless @post
   end
 
   def post_params
-    params.require(:post).permit(:title, :uri, :user_id)
+    params.require(:post).permit(:title, :url)
   end
 end

@@ -8,7 +8,7 @@ class Post < ApplicationRecord
 
   private 
 
-  def validate_uri
+  def validate_url
     uri = URI.parse(url)
     errors.add(:url, I18n.t('post.invalid_url')) unless uri.is_a?(URI::HTTP) && !uri.host.nil?
   rescue URI::InvalidURIError
