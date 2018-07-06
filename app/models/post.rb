@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
   validates :title, :url, presence: true
-  validates_uniqueness_of :url
+  validates :url, uniqueness: true
 
   validate :validate_url
 

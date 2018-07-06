@@ -24,7 +24,7 @@ class SessionsController < Devise::SessionsController
       return 
     end
 
-    token = User.find_by(email: payload["email"]).generate_token
+    token = User.find_by(email: payload['email']).generate_token
     render json: { token: token }, status: :ok
   end
 end

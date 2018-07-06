@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'sessions' }
-  get "/users/refersh_token" => "sessions#refresh_token" 
+  devise_scope :user do
+    get "users/refresh_token", to: "sessions#refresh_token" 
+  end
 
-  namespace :api do
+  namespace :api, defaults:{ format: :json } do
     namespace :v1 do
       resources :posts
     end
