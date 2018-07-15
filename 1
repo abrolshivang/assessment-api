@@ -1,0 +1,81 @@
+diff --git a/Gemfile b/Gemfile
+index 9bb80be..017bafb 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -16,6 +16,7 @@ group :development, :test do
+   gem 'pry'
+   gem 'pry-nav'
+   gem 'factory_bot_rails'
++  gem 'rspec_api_documentation'
+ end
+ 
+ group :test do
+diff --git a/Gemfile.lock b/Gemfile.lock
+index a5e7ebc..d37b36f 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -92,6 +92,7 @@ GEM
+     minitest (5.11.3)
+     msgpack (1.2.4)
+     multi_json (1.13.1)
++    mustache (1.0.5)
+     nio4r (2.3.1)
+     nokogiri (1.8.4)
+       mini_portile2 (~> 2.3.0)
+@@ -144,6 +145,10 @@ GEM
+     responders (2.4.0)
+       actionpack (>= 4.2.0, < 5.3)
+       railties (>= 4.2.0, < 5.3)
++    rspec (3.7.0)
++      rspec-core (~> 3.7.0)
++      rspec-expectations (~> 3.7.0)
++      rspec-mocks (~> 3.7.0)
+     rspec-core (3.7.1)
+       rspec-support (~> 3.7.0)
+     rspec-expectations (3.7.0)
+@@ -161,6 +166,10 @@ GEM
+       rspec-mocks (~> 3.7.0)
+       rspec-support (~> 3.7.0)
+     rspec-support (3.7.1)
++    rspec_api_documentation (5.1.0)
++      activesupport (>= 3.0.0)
++      mustache (~> 1.0, >= 0.99.4)
++      rspec (~> 3.0)
+     rubocop (0.57.1)
+       jaro_winkler (~> 1.5.1)
+       parallel (~> 1.10)
+@@ -212,6 +221,7 @@ DEPENDENCIES
+   rack-cors
+   rails (~> 5.2.0)
+   rspec-rails
++  rspec_api_documentation
+   rubocop
+   spring
+   spring-watcher-listen (~> 2.0.0)
+diff --git a/README.md b/README.md
+index 792d183..e48a7a8 100644
+--- a/README.md
++++ b/README.md
+@@ -7,4 +7,5 @@ $ bundle exec rails db:create
+ $ bundle exec rails db:migrate
+ $ bundle exec rails db:seed
+ $ bundle exec rails s # foo@bar.com/123456
++$ open doc/api/index.html # To see documentation 
+ ```
+diff --git a/config/routes.rb b/config/routes.rb
+index 0fe688b..0f59b1d 100644
+--- a/config/routes.rb
++++ b/config/routes.rb
+@@ -1,8 +1,10 @@
+ Rails.application.routes.draw do
+   devise_for :users, controllers: { sessions: 'sessions' }
+-  get "/users/refersh_token" => "sessions#refresh_token" 
++  devise_scope :user do
++    get "users/refresh_token", to: "sessions#refresh_token" 
++  end
+ 
+-  namespace :api do
++  namespace :api, defaults:{ format: :json } do
+     namespace :v1 do
+       resources :posts
+     end

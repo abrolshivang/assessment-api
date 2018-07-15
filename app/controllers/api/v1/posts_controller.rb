@@ -1,4 +1,4 @@
-class Api::V1::PostsController < ApplicationController
+  class Api::V1::PostsController < ApplicationController
   before_action :authenticate!, except: %i[index show]
   before_action :authorize_post, only: %i[update destroy]
 

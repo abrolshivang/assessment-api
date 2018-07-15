@@ -106,6 +106,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
 
   describe "DELETE #destroy" do
     let!(:user) { create(:user) }
+    
 
     before do
       @request.headers['X-ACCESS-TOKEN'] = user.generate_token
